@@ -19,11 +19,11 @@ class PodcastProcessor {
     public static function getPodcastLinkData($podcast) {
         $parts = explode('-', $podcast);
         $topic = explode('.',$parts[1])[0];
-        $clean_topic = (array_key_exists($topic, TOPICS)) ? TOPICS[$topic] : 'Episode';
+        $clean_topic = (array_key_exists($topic, TOPICS)) ? TOPICS[$topic] : DEFAULT_EPISODE_TYPE;
         
-        $date = DateTimeImmutable::createFromFormat('Ymd',$parts[0]);
+        $date = DateTimeImmutable::createFromFormat(DATE_FMT,$parts[0]);
         
-        $title = $date->format('F d, Y') . ': ' . $clean_topic;
+        $title = $date->format(DATE_DISPLAY_FMT) . ': ' . $clean_topic;
         
         return [
             'link' => PODCAST_ROOT . '/' . $podcast, 
